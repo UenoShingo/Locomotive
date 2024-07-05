@@ -5,26 +5,22 @@ using UnityEngine;
 
 public class RopeController : MonoBehaviour
 {
-    RectTransform rectTransform; // UI要素のRectTransform
-    Vector3 startPosition;       // スワイプ開始時の位置
-    Vector3 lastMousePosition;   // 前フレームでのマウスの位置
+    RectTransform rectTransform;
+    Vector3 startPosition;
+    Vector3 lastMousePosition;
 
-    // SmokeControllerを持つGameObjectへの参照を保持するためのシリアライズフィールド
     [SerializeField]
     private GameObject smokeObject;
-    // SmokeControllerコンポーネントへの参照
     private SmokeController smokeController;
 
-    //警笛中か判定する変数
     private bool isSmoking = false;
 
     void Start()
     {
-        rectTransform = GetComponent<RectTransform>(); // RectTransformを取得
-        startPosition = rectTransform.anchoredPosition3D; // 初期位置を保存（Vector3型）
-        lastMousePosition = Input.mousePosition; // 前フレームのマウス位置を保存
+        rectTransform = GetComponent<RectTransform>();
+        startPosition = rectTransform.anchoredPosition3D;
+        lastMousePosition = Input.mousePosition;
 
-        // smokeObjectがnullでない場合、そのオブジェクトからSmokeControllerコンポーネントを取得
         if (smokeObject != null)
         {
             smokeController = smokeObject.GetComponent<SmokeController>();
@@ -35,27 +31,21 @@ public class RopeController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            // マウスをクリックした場合はスワイプ開始
             startPosition = rectTransform.anchoredPosition3D;
             lastMousePosition = Input.mousePosition;
         }
         else if (Input.GetMouseButton(0))
         {
-            // ドラッグ中にUI要素を移動する
             Vector3 delta = Input.mousePosition - lastMousePosition;
             rectTransform.anchoredPosition3D += new Vector3(0, delta.y, 0);
             lastMousePosition = Input.mousePosition;
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            // マウスを離した場合は初期位置に戻る
             rectTransform.anchoredPosition3D = startPosition;
         }
 
-
-        //警笛が一定以下に下がっていたら動作
         WhistleAction();
-
     }
 
     private void WhistleAction()
