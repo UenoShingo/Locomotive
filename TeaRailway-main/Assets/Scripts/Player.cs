@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
-    //色変え系
+    //色変更系
     public enum colorStete
     {
         redMode,
@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     private Color colorD = Color.blue;
 
     [SerializeField]
-    private ParticleSystem smokeParticleSystem;  // Reference to the particle system
+    private ParticleSystem smokeParticleSystem;  // パーティクルシステムの参照
 
     //移動系
     [SerializeField]
@@ -72,6 +72,9 @@ public class Player : MonoBehaviour
         var velocity = rigidbody.velocity;
         velocity.x = speed + deltaSpeed;
         rigidbody.velocity = velocity;
+
+        // deltaSpeedはRopeControllerからリセットされるためここではリセットしない
+        //deltaSpeed = 0f;
     }
 
     void OnTriggerEnter(Collider other)
@@ -88,6 +91,11 @@ public class Player : MonoBehaviour
                 deltaSpeed = -0.25f * dashPower;
             }
         }
+    }
+
+    public void SetDeltaSpeed(float newDeltaSpeed)
+    {
+        deltaSpeed = newDeltaSpeed;
     }
 
     private void ChangeColor(Color newColor)

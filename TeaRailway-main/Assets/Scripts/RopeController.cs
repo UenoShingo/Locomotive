@@ -16,10 +16,12 @@ public class RopeController : MonoBehaviour
     private SmokeController smokeController;
 
     private bool isSmoking = false;
+    private float smokingDecreaseRate = 0.1f;  // 加速度の減少率
+    private float smokingDeltaSpeed = 0f;  // 減少した加速度の合計
 
     void Start()
     {
-        player = GetComponent<Player>();
+        player = FindObjectOfType<Player>();
 
         rectTransform = GetComponent<RectTransform>();
         startPosition = rectTransform.anchoredPosition3D;
@@ -43,10 +45,16 @@ public class RopeController : MonoBehaviour
             Vector3 delta = Input.mousePosition - lastMousePosition;
             rectTransform.anchoredPosition3D += new Vector3(0, delta.y, 0);
             lastMousePosition = Input.mousePosition;
+
+            // ロープを引っ張っている間に加速度を減少させる
+            smokingDeltaSpeed -= smokingDecreaseRate * Time.deltaTime;
+            player.SetDeltaSpeed(smokingDeltaSpeed);
         }
         else if (Input.GetMouseButtonUp(0))
         {
             rectTransform.anchoredPosition3D = startPosition;
+            smokingDeltaSpeed = 0f;  // リセット
+            player.SetDeltaSpeed(smokingDeltaSpeed);
         }
 
         WhistleAction();
