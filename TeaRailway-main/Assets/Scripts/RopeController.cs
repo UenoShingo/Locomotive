@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class RopeController : MonoBehaviour
 {
+    public Player player;
+
     RectTransform rectTransform;
     Vector3 startPosition;
     Vector3 lastMousePosition;
@@ -17,6 +19,8 @@ public class RopeController : MonoBehaviour
 
     void Start()
     {
+        player = GetComponent<Player>();
+
         rectTransform = GetComponent<RectTransform>();
         startPosition = rectTransform.anchoredPosition3D;
         lastMousePosition = Input.mousePosition;

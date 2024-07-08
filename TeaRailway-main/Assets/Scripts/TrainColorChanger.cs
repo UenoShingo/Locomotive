@@ -1,39 +1,58 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
+//using UnityEngine.tvOS;
 
-public class TrainColorChanger : MonoBehaviour
-{
-    [SerializeField]
-    private Renderer trainRenderer;
+//public class TrainColorChanger : MonoBehaviour
+//{
+//    //public enum colorStete
+//    //{
+//    //    redMode,
+//    //    yellowMode, 
+//    //    blueMode,
+//    //}
+//    colorStete mode = colorStete.redMode;
 
-    [SerializeField]
-    private Color colorA = Color.red;
+//    [SerializeField]
+//    private Renderer trainRenderer;
 
-    [SerializeField]
-    private Color colorS = Color.green;
+//    [SerializeField]
+//    private Color colorA = Color.red;
 
-    [SerializeField]
-    private Color colorD = Color.blue;
+//    [SerializeField]
+//    private Color colorS = Color.yellow;
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            ChangeColor(colorA);
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            ChangeColor(colorS);
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            ChangeColor(colorD);
-        }
-    }
+//    [SerializeField]
+//    private Color colorD = Color.blue;
 
-    private void ChangeColor(Color newColor)
-    {
-        trainRenderer.material.color = newColor;
-    }
-}
+//    private void Start()
+//    {
+
+//        Debug.Log(mode);
+//    }
+
+//    void Update()
+//    {
+//        if (Input.GetKeyDown(KeyCode.A))
+//        {
+//            ChangeColor(colorA);
+//            mode = colorStete.redMode;
+//        }
+//        else if (Input.GetKeyDown(KeyCode.S))
+//        {
+//            ChangeColor(colorS);
+//            mode = colorStete.yellowMode;
+//        }
+//        else if (Input.GetKeyDown(KeyCode.D))
+//        {
+//            ChangeColor(colorD);
+//            mode = colorStete.blueMode;
+//        }
+//        Debug.Log(mode);
+//    }
+
+//    private void ChangeColor(Color newColor)
+//    {
+//        trainRenderer.material.color = newColor;
+//    }
+//}

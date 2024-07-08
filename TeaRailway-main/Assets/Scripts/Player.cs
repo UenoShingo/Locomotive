@@ -5,6 +5,30 @@ using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
+    //色変え系
+    public enum colorStete
+    {
+        redMode,
+        yellowMode,
+        blueMode,
+    }
+    colorStete mode = colorStete.redMode;
+
+    [SerializeField]
+    private Renderer trainRenderer;
+
+    [SerializeField]
+    private Color colorA = Color.red;
+
+    [SerializeField]
+    private Color colorS = Color.yellow;
+
+    [SerializeField]
+    private Color colorD = Color.blue;
+
+
+    //移動系
+
     [SerializeField]
     [Tooltip("移動速度を指定します。")]
     private float speed = 2;
@@ -14,7 +38,7 @@ public class Player : MonoBehaviour
     private Vector2 jumpPower = new Vector2(0, 6);
 
     [SerializeField]
-    [Tooltip("ジャンプ力を指定します。")]
+    [Tooltip("加速力を指定します。")]
     private float dashPower = 4.0f;
 
     private float deltaSpeed = 0f;
@@ -28,19 +52,20 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            rigidbody.AddForce(jumpPower, ForceMode.Impulse);
+            ChangeColor(colorA);
+            mode = colorStete.redMode;
         }
-
-        if (Input.GetKeyDown(KeyCode.X))
+        else if (Input.GetKeyDown(KeyCode.S))
         {
-            deltaSpeed = dashPower;
+            ChangeColor(colorS);
+            mode = colorStete.yellowMode;
         }
-
-        if (Input.GetKeyDown(KeyCode.Z))
+        else if (Input.GetKeyDown(KeyCode.D))
         {
-            deltaSpeed = dashPower -2;
+            ChangeColor(colorD);
+            mode = colorStete.blueMode;
         }
 
 
@@ -52,11 +77,41 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("GreenLeaf"))
+        if (other.CompareTag("yellowLeaf"))
         {
-            Debug.Log("GreenLeaf");
-            deltaSpeed = dashPower;
+            if (mode == colorStete.yellowMode)
+            {
+                Debug.Log("yellowLeaf");
+                deltaSpeed = dashPower;
+            }
+            else
+            {
+                deltaSpeed = -0.25f * dashPower;
+            }
+
+            if (mode == colorStete.yellowMode)
+            {
+                Debug.Log("BlueLeaf");
+                deltaSpeed = dashPower;
+            }
+            else
+            {
+                deltaSpeed = -0.25f * dashPower;
+            }
+
+            if (mode == colorStete.yellowMode)
+            {
+                Debug.Log("RedLeaf");
+                deltaSpeed = dashPower;
+            }
+            else
+            {
+                deltaSpeed = -0.25f * dashPower;
+            }
         }
     }
-
+    private void ChangeColor(Color newColor)
+    {
+        trainRenderer.material.color = newColor;
+    }
 }
