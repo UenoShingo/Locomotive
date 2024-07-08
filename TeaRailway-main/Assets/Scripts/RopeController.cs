@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class RopeController : MonoBehaviour
@@ -16,6 +15,7 @@ public class RopeController : MonoBehaviour
     private SmokeController smokeController;
 
     private bool isSmoking = false;
+    private bool isWhistleBlowing = false;  // ‹D“J‚ª–Â‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
     private float smokingDecreaseRate = 0.1f;  // ‰Á‘¬“x‚ÌŒ¸­—¦
     private float smokingDeltaSpeed = 0f;  // Œ¸­‚µ‚½‰Á‘¬“x‚Ì‡Œv
 
@@ -71,11 +71,15 @@ public class RopeController : MonoBehaviour
                 isSmoking = true;
                 GetComponent<AudioSource>().Play();
             }
+            // ‹D“J‚ª–Â‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
+            isWhistleBlowing = true;
         }
         else
         {
             isSmoking = false;
             smokeController.SmokeDown();
+            // ‹D“J‚ª–Â‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
+            isWhistleBlowing = false;
         }
     }
 }

@@ -46,6 +46,8 @@ public class Player : MonoBehaviour
 
     private Rigidbody rigidbody;
 
+    private bool isWhistleBlowing = false;  // 汽笛が鳴っているかどうかのフラグ
+
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -88,7 +90,10 @@ public class Player : MonoBehaviour
             }
             else
             {
-                deltaSpeed = -0.25f * dashPower;
+                if (!isWhistleBlowing)
+                {
+                    deltaSpeed = -0.25f * dashPower;
+                }
             }
         }
     }
@@ -101,7 +106,7 @@ public class Player : MonoBehaviour
     private void ChangeColor(Color newColor)
     {
         trainRenderer.material.color = newColor;
-        ChangeSmokeColor(newColor);  // Update the smoke particle color
+        ChangeSmokeColor(newColor);  // 煙のパーティクルの色も更新
     }
 
     private void ChangeSmokeColor(Color newColor)
