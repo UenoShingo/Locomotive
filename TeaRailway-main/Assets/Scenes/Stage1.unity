@@ -377,6 +377,7 @@ MonoBehaviour:
   colorA: {r: 1, g: 0, b: 0, a: 1}
   colorS: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   colorD: {r: 0, g: 0, b: 1, a: 1}
+  smokeParticleSystem: {fileID: 1765224907}
   speed: 2
   jumpPower: {x: 0, y: 6}
   dashPower: 4

@@ -26,9 +26,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Color colorD = Color.blue;
 
+    [SerializeField]
+    private ParticleSystem smokeParticleSystem;  // Reference to the particle system
 
     //à⁄ìÆån
-
     [SerializeField]
     [Tooltip("à⁄ìÆë¨ìxÇéwíËÇµÇ‹Ç∑ÅB")]
     private float speed = 2;
@@ -68,8 +69,6 @@ public class Player : MonoBehaviour
             mode = colorStete.blueMode;
         }
 
-
-
         var velocity = rigidbody.velocity;
         velocity.x = speed + deltaSpeed;
         rigidbody.velocity = velocity;
@@ -88,30 +87,18 @@ public class Player : MonoBehaviour
             {
                 deltaSpeed = -0.25f * dashPower;
             }
-
-            if (mode == colorStete.yellowMode)
-            {
-                Debug.Log("BlueLeaf");
-                deltaSpeed = dashPower;
-            }
-            else
-            {
-                deltaSpeed = -0.25f * dashPower;
-            }
-
-            if (mode == colorStete.yellowMode)
-            {
-                Debug.Log("RedLeaf");
-                deltaSpeed = dashPower;
-            }
-            else
-            {
-                deltaSpeed = -0.25f * dashPower;
-            }
         }
     }
+
     private void ChangeColor(Color newColor)
     {
         trainRenderer.material.color = newColor;
+        ChangeSmokeColor(newColor);  // Update the smoke particle color
+    }
+
+    private void ChangeSmokeColor(Color newColor)
+    {
+        var main = smokeParticleSystem.main;
+        main.startColor = newColor;
     }
 }
