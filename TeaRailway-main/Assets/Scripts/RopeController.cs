@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class RopeController : MonoBehaviour
 {
@@ -47,7 +48,15 @@ public class RopeController : MonoBehaviour
             lastMousePosition = Input.mousePosition;
 
             // ロープを引っ張っている間に加速度を減少させる
+            Debug.Log(smokingDeltaSpeed);
             smokingDeltaSpeed -= smokingDecreaseRate * Time.deltaTime;
+
+            if (smokingDeltaSpeed < -1f)
+            {
+                Debug.Log(smokingDeltaSpeed + "微少速度");
+                smokingDeltaSpeed = -1f;
+            }
+
             player.SetDeltaSpeed(smokingDeltaSpeed);
         }
         else if (Input.GetMouseButtonUp(0))

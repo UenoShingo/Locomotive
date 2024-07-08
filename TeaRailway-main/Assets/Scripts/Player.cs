@@ -44,6 +44,8 @@ public class Player : MonoBehaviour
 
     private float deltaSpeed = 0f;
 
+    private float whistleDeltaSpeed = 0f;
+
     private Rigidbody rigidbody;
 
     private bool isWhistleBlowing = false;  // 汽笛が鳴っているかどうかのフラグ
@@ -55,6 +57,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log(rigidbody.velocity.magnitude);
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             ChangeColor(colorA);
@@ -72,7 +76,7 @@ public class Player : MonoBehaviour
         }
 
         var velocity = rigidbody.velocity;
-        velocity.x = speed + deltaSpeed;
+        velocity.x = speed + deltaSpeed + whistleDeltaSpeed;
         rigidbody.velocity = velocity;
 
         // deltaSpeedはRopeControllerからリセットされるためここではリセットしない
@@ -92,15 +96,69 @@ public class Player : MonoBehaviour
             {
                 if (!isWhistleBlowing)
                 {
+                    Debug.Log("CollarError");
                     deltaSpeed = -0.25f * dashPower;
                 }
             }
         }
+
+        if (other.CompareTag("redLeaf"))
+        {
+            if (mode == colorStete.redMode)
+            {
+                Debug.Log("redLeaf");
+                deltaSpeed = dashPower;
+            }
+            else
+            {
+                if (!isWhistleBlowing)
+                {
+                    Debug.Log("CollarError");
+                    deltaSpeed = -0.25f * dashPower;
+                }
+            }
+        }
+
+        if (other.CompareTag("blueLeaf"))
+        {
+            if (mode == colorStete.blueMode)
+            {
+                Debug.Log("blueLeaf");
+                deltaSpeed = dashPower;
+            }
+            else
+            {
+                if (!isWhistleBlowing)
+                {
+                    Debug.Log("CollarError");
+                    deltaSpeed = -0.25f * dashPower;
+                }
+            }
+        }
+
+        if (other.CompareTag("Barrel"))
+        {
+            if (mode == colorStete.blueMode)
+            {
+                Debug.Log("Barrel");
+                deltaSpeed = dashPower;
+            }
+            else
+            {
+                if (!isWhistleBlowing)
+                {
+                    Debug.Log("CollarError");
+                    deltaSpeed = -0.27f * dashPower;
+                }
+            }
+        }
+
+
     }
 
     public void SetDeltaSpeed(float newDeltaSpeed)
     {
-        deltaSpeed = newDeltaSpeed;
+        whistleDeltaSpeed = newDeltaSpeed;
     }
 
     private void ChangeColor(Color newColor)
