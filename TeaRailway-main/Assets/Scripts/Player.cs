@@ -138,22 +138,20 @@ public class Player : MonoBehaviour
 
         if (other.CompareTag("Barrel"))
         {
-            if (mode == colorStete.blueMode)
+            if (!isWhistleBlowing)  // Ç‡ÇµãDìJÇ™ñ¬Ç¡ÇƒÇ¢ÇÈÇ»ÇÁÅAå∏ë¨ÇµÇ»Ç¢
             {
-                Debug.Log("Barrel");
-                deltaSpeed = dashPower;
-            }
-            else
-            {
-                if (!isWhistleBlowing)
+                if (mode == colorStete.blueMode)
+                {
+                    Debug.Log("Barrel");
+                    deltaSpeed = dashPower;
+                }
+                else
                 {
                     Debug.Log("CollarError");
                     deltaSpeed = -0.27f * dashPower;
                 }
             }
         }
-
-
     }
 
     public void SetDeltaSpeed(float newDeltaSpeed)
@@ -171,5 +169,10 @@ public class Player : MonoBehaviour
     {
         var main = smokeParticleSystem.main;
         main.startColor = newColor;
+    }
+
+    public void SetWhistleBlowing(bool isBlowing)
+    {
+        isWhistleBlowing = isBlowing;
     }
 }

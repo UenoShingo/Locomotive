@@ -82,6 +82,7 @@ public class RopeController : MonoBehaviour
             }
             // ‹D“J‚ª–Â‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
             isWhistleBlowing = true;
+            player.SetWhistleBlowing(true);  // ‹D“Jó‘Ô‚ğPlayer‚É“`‚¦‚é
         }
         else
         {
@@ -89,6 +90,7 @@ public class RopeController : MonoBehaviour
             smokeController.SmokeDown();
             // ‹D“J‚ª–Â‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚·‚é
             isWhistleBlowing = false;
+            player.SetWhistleBlowing(false);  // ‹D“Jó‘Ô‚ğPlayer‚É“`‚¦‚é
         }
     }
 }
