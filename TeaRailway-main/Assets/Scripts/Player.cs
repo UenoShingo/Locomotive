@@ -1,96 +1,67 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
-    //色変更系
-    public enum colorStete
+    public enum ColorState
     {
-        redMode,
-        yellowMode,
-        blueMode,
+        Red,
+        Yellow,
+        Blue,
     }
-    colorStete mode = colorStete.redMode;
+    ColorState mode = ColorState.Red;
 
-    [SerializeField]
-    private Renderer trainRenderer;
+    [SerializeField] private Renderer trainRenderer;
+    [SerializeField] private Color colorA = Color.red;
+    [SerializeField] private Color colorS = Color.yellow;
+    [SerializeField] private Color colorD = Color.blue;
+    [SerializeField] private ParticleSystem smokeParticleSystem;
 
-    [SerializeField]
-    private Color colorA = Color.red;
-
-    [SerializeField]
-    private Color colorS = Color.yellow;
-
-    [SerializeField]
-    private Color colorD = Color.blue;
-
-    [SerializeField]
-    private ParticleSystem smokeParticleSystem;  // パーティクルシステムの参照
-
-    //移動系
-    [SerializeField]
-    [Tooltip("移動速度を指定します。")]
-    private float speed = 2;
-
-    [SerializeField]
-    [Tooltip("ジャンプ力を指定します。")]
-    private Vector2 jumpPower = new Vector2(0, 6);
-
-    [SerializeField]
-    [Tooltip("加速力を指定します。")]
-    private float dashPower = 4.0f;
+    [SerializeField] private float speed = 2;
+    [SerializeField] private float jumpPower = 6;
+    [SerializeField] private float baseDashPower = 4.0f; // 基本の加速力
+    private float dashPower = 4.0f; // 現在の加速力
 
     private float deltaSpeed = 0f;
-
     private float whistleDeltaSpeed = 0f;
-
-    private Rigidbody rigidbody;
-
-    private bool isWhistleBlowing = false;  // 汽笛が鳴っているかどうかのフラグ
+    private Rigidbody rb;
+    private bool isWhistleBlowing = false;
 
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-        //Debug.Log(rigidbody.velocity.magnitude);
-
         if (Input.GetKeyDown(KeyCode.A))
         {
             ChangeColor(colorA);
-            mode = colorStete.redMode;
+            mode = ColorState.Red;
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
             ChangeColor(colorS);
-            mode = colorStete.yellowMode;
+            mode = ColorState.Yellow;
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
             ChangeColor(colorD);
-            mode = colorStete.blueMode;
+            mode = ColorState.Blue;
         }
 
-        var velocity = rigidbody.velocity;
+        Vector3 velocity = rb.velocity;
         velocity.x = speed + deltaSpeed + whistleDeltaSpeed;
-        rigidbody.velocity = velocity;
-
-        // deltaSpeedはRopeControllerからリセットされるためここではリセットしない
-        //deltaSpeed = 0f;
+        rb.velocity = velocity;
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("yellowLeaf"))
         {
-            if (mode == colorStete.yellowMode)
+            if (mode == ColorState.Yellow)
             {
                 Debug.Log("yellowLeaf");
-                deltaSpeed = dashPower;
+                deltaSpeed += dashPower; // dashPowerを加算
             }
             else
             {
@@ -104,10 +75,10 @@ public class Player : MonoBehaviour
 
         if (other.CompareTag("redLeaf"))
         {
-            if (mode == colorStete.redMode)
+            if (mode == ColorState.Red)
             {
                 Debug.Log("redLeaf");
-                deltaSpeed = dashPower;
+                deltaSpeed += dashPower; // dashPowerを加算
             }
             else
             {
@@ -121,10 +92,10 @@ public class Player : MonoBehaviour
 
         if (other.CompareTag("blueLeaf"))
         {
-            if (mode == colorStete.blueMode)
+            if (mode == ColorState.Blue)
             {
                 Debug.Log("blueLeaf");
-                deltaSpeed = dashPower;
+                deltaSpeed += dashPower; // dashPowerを加算
             }
             else
             {
@@ -138,12 +109,12 @@ public class Player : MonoBehaviour
 
         if (other.CompareTag("Barrel"))
         {
-            if (!isWhistleBlowing)  // もし汽笛が鳴っているなら、減速しない
+            if (!isWhistleBlowing)  // 汽笛が鳴っているなら、減速しない
             {
-                if (mode == colorStete.blueMode)
+                if (mode == ColorState.Blue)
                 {
                     Debug.Log("Barrel");
-                    deltaSpeed = dashPower;
+                    deltaSpeed += dashPower; // dashPowerを加算
                 }
                 else
                 {
@@ -174,5 +145,10 @@ public class Player : MonoBehaviour
     public void SetWhistleBlowing(bool isBlowing)
     {
         isWhistleBlowing = isBlowing;
+    }
+
+    public void SetDashPower(float newDashPower)
+    {
+        dashPower = newDashPower;
     }
 }
