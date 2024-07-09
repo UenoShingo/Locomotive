@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
 
     private RopeController ropeController; // RopeController‚ğ•Û‚·‚é•Ï”‚ğ’Ç‰Á
 
-    [SerializeField] private float maxSpeed = 10.0f; // Å‘å‘¬“x‚Ìİ’è
+    [SerializeField] private float maxSpeed = 27.78f; // Å‘å‘¬“x‚Ìİ’è
 
     void Start()
     {
