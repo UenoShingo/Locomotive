@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
 
     private RopeController ropeController; // RopeController‚ğ•Û‚·‚é•Ï”‚ğ’Ç‰Á
 
+    [SerializeField] private float maxSpeed = 10.0f; // Å‘å‘¬“x‚Ìİ’è
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -53,7 +55,15 @@ public class Player : MonoBehaviour
         }
 
         Vector3 velocity = rb.velocity;
-        velocity.x = speed + deltaSpeed + whistleDeltaSpeed;
+        float currentSpeed = speed + deltaSpeed + whistleDeltaSpeed;
+
+        // Å‘å‘¬“x‚ğ’´‚¦‚È‚¢‚æ‚¤‚É§ŒÀ‚·‚é
+        if (currentSpeed > maxSpeed)
+        {
+            currentSpeed = maxSpeed;
+        }
+
+        velocity.x = currentSpeed;
 
         // Œã‚ë‚Éi‚Ü‚È‚¢‚æ‚¤‚É‚·‚éğŒ‚ğ’Ç‰Á
         if (velocity.x < 0)

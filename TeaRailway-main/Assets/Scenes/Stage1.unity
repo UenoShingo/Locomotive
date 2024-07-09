@@ -495,8 +495,9 @@ MonoBehaviour:
   colorD: {r: 0, g: 0, b: 1, a: 1}
   smokeParticleSystem: {fileID: 1765224907}
   speed: 2
-  jumpPower: {x: 0, y: 6}
-  dashPower: 4
+  jumpPower: 6
+  baseDashPower: 4
+  maxSpeed: 10
 --- !u!65 &302512779
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1201,7 +1202,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &713583403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1320,7 +1321,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &752843553
 BoxCollider:
   m_ObjectHideFlags: 0
