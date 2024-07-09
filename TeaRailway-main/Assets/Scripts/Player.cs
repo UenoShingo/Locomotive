@@ -26,9 +26,12 @@ public class Player : MonoBehaviour
     private Rigidbody rb;
     private bool isWhistleBlowing = false;
 
+    private RopeController ropeController; // RopeController‚ğ•Û‚·‚é•Ï”‚ğ’Ç‰Á
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        ropeController = FindObjectOfType<RopeController>(); // RopeController‚ğæ“¾
     }
 
     void Update()
@@ -51,48 +54,33 @@ public class Player : MonoBehaviour
 
         Vector3 velocity = rb.velocity;
         velocity.x = speed + deltaSpeed + whistleDeltaSpeed;
+
+        // Œã‚ë‚Éi‚Ü‚È‚¢‚æ‚¤‚É‚·‚éğŒ‚ğ’Ç‰Á
+        if (velocity.x < 0)
+        {
+            velocity.x = 0;
+            deltaSpeed = 0;
+            whistleDeltaSpeed = 0;
+        }
+
         rb.velocity = velocity;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("yellowLeaf"))
+        if (other.CompareTag("yellowLeaf") || other.CompareTag("redLeaf") || other.CompareTag("blueLeaf"))
         {
-            if (mode == ColorState.Yellow)
+            if (mode == ColorState.Yellow && other.CompareTag("yellowLeaf"))
             {
                 Debug.Log("yellowLeaf");
                 deltaSpeed += dashPower; // dashPower‚ğ‰ÁZ
             }
-            else
-            {
-                if (!isWhistleBlowing)
-                {
-                    Debug.Log("CollarError");
-                    deltaSpeed = -0.25f * dashPower;
-                }
-            }
-        }
-
-        if (other.CompareTag("redLeaf"))
-        {
-            if (mode == ColorState.Red)
+            else if (mode == ColorState.Red && other.CompareTag("redLeaf"))
             {
                 Debug.Log("redLeaf");
                 deltaSpeed += dashPower; // dashPower‚ğ‰ÁZ
             }
-            else
-            {
-                if (!isWhistleBlowing)
-                {
-                    Debug.Log("CollarError");
-                    deltaSpeed = -0.25f * dashPower;
-                }
-            }
-        }
-
-        if (other.CompareTag("blueLeaf"))
-        {
-            if (mode == ColorState.Blue)
+            else if (mode == ColorState.Blue && other.CompareTag("blueLeaf"))
             {
                 Debug.Log("blueLeaf");
                 deltaSpeed += dashPower; // dashPower‚ğ‰ÁZ
@@ -109,7 +97,7 @@ public class Player : MonoBehaviour
 
         if (other.CompareTag("Barrel"))
         {
-            if (!isWhistleBlowing)  // ‹D“J‚ª–Â‚Á‚Ä‚¢‚é‚È‚çAŒ¸‘¬‚µ‚È‚¢
+            if (!isWhistleBlowing && (ropeController == null || !ropeController.IsRopePulling())) // RopeController‚ª‚È‚¢‚©Aˆø‚Á’£‚ç‚ê‚Ä‚¢‚È‚¢ê‡
             {
                 if (mode == ColorState.Blue)
                 {
@@ -128,6 +116,9 @@ public class Player : MonoBehaviour
     public void SetDeltaSpeed(float newDeltaSpeed)
     {
         whistleDeltaSpeed = newDeltaSpeed;
+
+        // RopeController‚©‚ç‚ÌŒ¸‘¬—¦‚ğ“K—p‚·‚é
+        deltaSpeed += newDeltaSpeed;
     }
 
     private void ChangeColor(Color newColor)
