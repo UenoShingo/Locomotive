@@ -30,6 +30,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float maxSpeed = 27.78f; // Å‘å‘¬“x‚Ìİ’è
 
+    private float LeafDownSpeed = -0.25f; // ’ƒ—t‚Æ‚ÌÕ“Ë‚ÌŒ¸‘¬—¦
+    private float BarrelDownSpeed = -0.27f; // ƒoƒŒƒ‹‚Æ‚ÌÕ“Ë‚ÌŒ¸‘¬—¦
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -100,7 +103,7 @@ public class Player : MonoBehaviour
                 if (!isWhistleBlowing)
                 {
                     Debug.Log("CollarError");
-                    deltaSpeed = -0.25f * dashPower;
+                    deltaSpeed = LeafDownSpeed * dashPower;
                 }
             }
         }
@@ -117,7 +120,7 @@ public class Player : MonoBehaviour
                 else
                 {
                     Debug.Log("CollarError");
-                    deltaSpeed = -0.27f * dashPower;
+                    deltaSpeed = BarrelDownSpeed * dashPower;
                 }
             }
         }
