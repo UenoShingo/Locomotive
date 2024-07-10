@@ -136,8 +136,9 @@ public class Player : MonoBehaviour
 
     private void ChangeColor(Color newColor)
     {
-        trainRenderer.material.color = newColor;
         ChangeSmokeColor(newColor);  // 煙のパーティクルの色も更新
+         //trainRenderer.material.color = newColor;
+
     }
 
     private void ChangeSmokeColor(Color newColor)
