@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxSpeed = 27.78f; // 最大速度の設定
 
     private float LeafDownSpeed = -0.25f; // 茶葉との衝突時の減速率
-    private float BarrelDownSpeed = -0.27f; // バレルとの衝突時の減速率
+    [SerializeField] private float BarrelDownSpeed = -0.27f; // バレルとの衝突時の減速率
 
     void Start()
     {
@@ -103,7 +103,7 @@ public class Player : MonoBehaviour
                 if (!isWhistleBlowing)
                 {
                     Debug.Log("CollarError");
-                    deltaSpeed = LeafDownSpeed * dashPower;
+                    deltaSpeed += LeafDownSpeed * dashPower;
                 }
             }
         }
@@ -112,16 +112,16 @@ public class Player : MonoBehaviour
         {
             if (!isWhistleBlowing && (ropeController == null || !ropeController.IsRopePulling())) // RopeControllerがないか、引っ張られていない場合
             {
-                if (mode == ColorState.Blue)
-                {
-                    Debug.Log("Barrel");
-                    deltaSpeed += dashPower; // dashPowerを加算
-                }
-                else
-                {
-                    Debug.Log("CollarError");
-                    deltaSpeed = BarrelDownSpeed * dashPower;
-                }
+                //if (mode == ColorState.Blue)
+                //{
+                //    Debug.Log("Barrel");
+                //    deltaSpeed += dashPower; // dashPowerを加算
+                //}
+                //else
+                //{
+                Debug.Log("CollarError");
+                deltaSpeed += BarrelDownSpeed * dashPower;
+                //}
             }
         }
     }
