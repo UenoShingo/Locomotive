@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
         countUpText.text = Mathf.FloorToInt(countUpTimer).ToString() + "s"; // "60s" ÇÃï\ãLÇ…ïœçX
 
         velocityX = rb.velocity.x;
-        velocityText.text = velocityX.ToString("F2") + "km/s";
+        velocityText.text = velocityX.ToString("F0") + "km/s";
     }
 
 

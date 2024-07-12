@@ -78,9 +78,9 @@ public class Player : MonoBehaviour
         velocity.x = currentSpeed;
 
         // Œã‚ë‚Éi‚Ü‚È‚¢‚æ‚¤‚É‚·‚éğŒ‚ğ’Ç‰Á
-        if (velocity.x < 0)
+        if (velocity.x < 2)
         {
-            velocity.x = 0;
+            velocity.x = 2;
             deltaSpeed = 0;
             whistleDeltaSpeed = 0;
         }
