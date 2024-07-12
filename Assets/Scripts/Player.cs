@@ -11,9 +11,9 @@ public class Player : MonoBehaviour
     ColorState mode = ColorState.Red;
 
     [SerializeField] private Renderer trainRenderer;
-    [SerializeField] private Color colorA = Color.red;
+    [SerializeField] private Color colorA = Color.blue;
     [SerializeField] private Color colorS = Color.yellow;
-    [SerializeField] private Color colorD = Color.blue;
+    [SerializeField] private Color colorD = Color.red;
     [SerializeField] private ParticleSystem smokeParticleSystem;
 
     [SerializeField] private float speed = 2;
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            ChangeColor(colorD);
+            ChangeColor(colorA);
             mode = ColorState.Red;
             uIManager.UIChangeRed();
         }
@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            ChangeColor(colorA);
+            ChangeColor(colorD);
             mode = ColorState.Blue;
             uIManager.UIChangeBlue();
         }

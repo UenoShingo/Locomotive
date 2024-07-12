@@ -17,14 +17,27 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject UiCollar_Blue;
     [SerializeField] GameObject UiCollar_Yellow;
 
+    [SerializeField] GameObject ClearBad;
+    [SerializeField] GameObject ClearNormal;
+    [SerializeField] GameObject ClearGood;
+    [SerializeField] GameObject TitleButton;
+    [SerializeField] GameObject QuitButton;
 
 
     void Start()
     {
+        Time.timeScale = 1; //リスタート時にタイムスケールを1に戻す
+
         rb = target.GetComponent<Rigidbody>();
         UiCollar_Red.SetActive(true);
         UiCollar_Blue.SetActive(false);
         UiCollar_Yellow.SetActive(false);
+        //クリアUI用（非表示）
+        ClearBad.SetActive(false);
+        ClearNormal.SetActive(false);
+        ClearGood.SetActive(false);
+        TitleButton.SetActive(false);
+        QuitButton.SetActive(false);
     }
 
 
@@ -65,4 +78,27 @@ public class UIManager : MonoBehaviour
         UiCollar_Yellow.SetActive(true);
     }
 
+    public void ShwoClearUI()
+    {
+        Time.timeScale = 0;
+
+        if(countUpTimer < 10f)
+        {
+            ClearGood.SetActive(true);
+            TitleButton.SetActive(true);
+            QuitButton.SetActive(true);
+        }
+        else if(countUpTimer < 20f)
+        {
+            ClearNormal.SetActive(true);
+            TitleButton.SetActive(true);
+            QuitButton.SetActive(true);
+        }
+        else 
+        { 
+            ClearBad.SetActive(true);
+            TitleButton.SetActive(true);
+            QuitButton.SetActive(true);
+        }
+    }
 }

@@ -22,4 +22,9 @@ public class SceneDirector : MonoBehaviour
         Application.Quit(); // アプリケーションを終了
     }
 
+    public void RestartButton()
+    {
+        Debug.Log("リスタート");
+        SceneManager.LoadScene("Stage1");
+    }
 }

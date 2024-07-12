@@ -7,6 +7,15 @@ public class Goal : MonoBehaviour
     [SerializeField]
     private float delayBeforeClearScene = 2.0f; // クリア画面に移行する前の遅延時間（秒）
 
+    [SerializeField] private GameObject Canvas;
+
+    private UIManager uIManager;
+
+    private void Start()
+    {
+        uIManager = Canvas.GetComponent<UIManager>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -24,6 +33,9 @@ public class Goal : MonoBehaviour
         yield return new WaitForSeconds(delayBeforeClearScene);
 
         // ClearSceneをロードする
-        SceneManager.LoadScene("ClearScene");
+        //SceneManager.LoadScene("ClearScene");
+
+        uIManager.ShwoClearUI();    //クリアシーン移動ではなくクリアUIを表示する形に移行
+
     }
 }
