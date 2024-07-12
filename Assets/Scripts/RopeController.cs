@@ -92,12 +92,15 @@ public class RopeController : MonoBehaviour
 
     private void WhistleAction()
     {
-        if (rectTransform.anchoredPosition3D.y < -400)
+        Debug.Log(rectTransform.anchoredPosition3D.y);
+        if (rectTransform.anchoredPosition3D.y < -100f)
         {
+            Debug.Log("smokeeeeeeeeeee");
             smokeController.SmokeUp();
 
             if (!isSmoking)
             {
+                Debug.Log("test");
                 isSmoking = true;
                 GetComponent<AudioSource>().Play();
             }
