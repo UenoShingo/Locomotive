@@ -33,6 +33,10 @@ public class Player : MonoBehaviour
     private float LeafDownSpeed = -0.25f; // íÉótÇ∆ÇÃè’ìÀéûÇÃå∏ë¨ó¶
     [SerializeField] private float BarrelDownSpeed = -0.27f; // ÉoÉåÉãÇ∆ÇÃè’ìÀéûÇÃå∏ë¨ó¶
 
+    [SerializeField] private float yellowLeafDownSpeed = -0.25f;
+    [SerializeField] private float redLeafDownSpeed = -0.25f;
+    [SerializeField] private float blueLeafDownSpeed = -0.25f;
+
     [SerializeField] private GameObject Canvas;
 
     private UIManager uIManager;
@@ -115,29 +119,24 @@ public class Player : MonoBehaviour
                 if (!isWhistleBlowing)
                 {
                     Debug.Log("CollarError");
-                    deltaSpeed += LeafDownSpeed * dashPower;
+                    if (other.CompareTag("yellowLeaf"))
+                    {
+                        deltaSpeed += yellowLeafDownSpeed * dashPower;
+                    }
+                    else if (other.CompareTag("redLeaf"))
+                    {
+                        deltaSpeed += redLeafDownSpeed * dashPower;
+                    }
+                    else if (other.CompareTag("blueLeaf"))
+                    {
+                        deltaSpeed += blueLeafDownSpeed * dashPower;
+                    }
                 }
             }
         }
 
-        if (other.CompareTag("Barrel"))
-        {
-            if (!isWhistleBlowing && (ropeController == null || !ropeController.IsRopePulling())) // RopeControllerÇ™Ç»Ç¢Ç©ÅAà¯Ç¡í£ÇÁÇÍÇƒÇ¢Ç»Ç¢èÍçá
-            {
-                //if (mode == ColorState.Blue)
-                //{
-                //    Debug.Log("Barrel");
-                //    deltaSpeed += dashPower; // dashPowerÇâ¡éZ
-                //}
-                //else
-                //{
-                Debug.Log("BarrelHit");
-                deltaSpeed += BarrelDownSpeed;
-                //}
-            }
-        }
+        // The rest of your OnTriggerEnter method...
     }
-
     public void SetDeltaSpeed(float newDeltaSpeed)
     {
         whistleDeltaSpeed = newDeltaSpeed;
