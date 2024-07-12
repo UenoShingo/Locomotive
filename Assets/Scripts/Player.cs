@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            ChangeColor(colorA);
+            ChangeColor(colorD);
             mode = ColorState.Red;
             uIManager.UIChangeRed();
         }
@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            ChangeColor(colorD);
+            ChangeColor(colorA);
             mode = ColorState.Blue;
             uIManager.UIChangeBlue();
         }
