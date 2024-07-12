@@ -39,6 +39,7 @@ public class RopeController : MonoBehaviour
         {
             startPosition = rectTransform.anchoredPosition3D;
             lastMousePosition = Input.mousePosition;
+            smokingDeltaSpeed = 0f; // 減速率をリセット
         }
         else if (Input.GetMouseButton(0))
         {
@@ -46,45 +47,27 @@ public class RopeController : MonoBehaviour
             rectTransform.anchoredPosition3D += new Vector3(0, delta.y, 0);
             lastMousePosition = Input.mousePosition;
 
-            // 減少率を徐々に変化させる
-            smokingDecreaseRate = Mathf.Lerp(smokingDecreaseRate, initialSmokingDecreaseRate, decreaseRateChangeSpeed * Time.deltaTime);
-
-            smokingDeltaSpeed -= smokingDecreaseRate * Time.deltaTime;
-
-            if (smokingDeltaSpeed < -1f)
-            {
-                smokingDeltaSpeed = -1f;
-            }
-
-            // 樽に当たっていない場合にのみプレイヤーに減速率を伝える
-            if (!IsHittingBarrel() || IsHittingBarrel()) //★★★速度表示
-            {
-                player.SetDeltaSpeed(smokingDeltaSpeed);
-            }
+            // 減少率を設定する（初期の減少率で）
+            smokingDeltaSpeed = -initialSmokingDecreaseRate;
         }
         else if (Input.GetMouseButtonUp(0))
         {
             rectTransform.anchoredPosition3D = startPosition;
-            smokingDeltaSpeed = 0f;
-            player.SetDeltaSpeed(smokingDeltaSpeed);
-
-            // 初期の減少率に戻す
-            smokingDecreaseRate = initialSmokingDecreaseRate;
+            smokingDeltaSpeed = 0f; // 減速率をリセット
         }
+
+        // プレイヤーに減速率を即座に適用する
+        player.SetDeltaSpeed(smokingDeltaSpeed);
 
         WhistleAction();
 
         // ロープを引っ張っている場合の減速処理
         if (IsRopePulling())
         {
-            // 減少率を徐々に変化させる
-            smokingDecreaseRate = Mathf.Lerp(smokingDecreaseRate, initialSmokingDecreaseRate, decreaseRateChangeSpeed * Time.deltaTime);
-
             // ここに減速の具体的な処理を記述する
-            // 例えば、deltaSpeedを減少させるなど
             if (!IsHittingBarrel())
             {
-                smokingDeltaSpeed -= smokingDecreaseRate * Time.deltaTime;
+                smokingDeltaSpeed = -initialSmokingDecreaseRate;
                 player.SetDeltaSpeed(smokingDeltaSpeed);
             }
         }
@@ -92,7 +75,6 @@ public class RopeController : MonoBehaviour
 
     private void WhistleAction()
     {
-        Debug.Log(rectTransform.anchoredPosition3D.y);
         if (rectTransform.anchoredPosition3D.y < -100f)
         {
             Debug.Log("smokeeeeeeeeeee");
