@@ -131,8 +131,8 @@ public class Player : MonoBehaviour
                 //}
                 //else
                 //{
-                Debug.Log("CollarError");
-                deltaSpeed += BarrelDownSpeed * dashPower;
+                Debug.Log("BarrelHit");
+                deltaSpeed += BarrelDownSpeed;
                 //}
             }
         }
