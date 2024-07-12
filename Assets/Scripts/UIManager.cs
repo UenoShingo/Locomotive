@@ -13,10 +13,18 @@ public class UIManager : MonoBehaviour
     [SerializeField] float velocityX;
     [SerializeField] Text velocityText;
     private Rigidbody rb;
+    [SerializeField] GameObject UiCollar_Red;
+    [SerializeField] GameObject UiCollar_Blue;
+    [SerializeField] GameObject UiCollar_Yellow;
+
+
 
     void Start()
     {
         rb = target.GetComponent<Rigidbody>();
+        UiCollar_Red.SetActive(true);
+        UiCollar_Blue.SetActive(false);
+        UiCollar_Yellow.SetActive(false);
     }
 
 
@@ -34,6 +42,27 @@ public class UIManager : MonoBehaviour
 
         velocityX = rb.velocity.x;
         velocityText.text = velocityX.ToString("F2") + "km/s";
+    }
+
+
+    public void UIChangeRed()
+    {
+        UiCollar_Red.SetActive(true);
+        UiCollar_Blue.SetActive(false);
+        UiCollar_Yellow.SetActive(false);
+    }
+   public void UIChangeBlue()
+    {
+        UiCollar_Red.SetActive(false);
+        UiCollar_Blue.SetActive(true);
+        UiCollar_Yellow.SetActive(false);
+    }
+
+   public void UIChangeYellow()
+    {
+        UiCollar_Red.SetActive(false);
+        UiCollar_Blue.SetActive(false);
+        UiCollar_Yellow.SetActive(true);
     }
 
 }

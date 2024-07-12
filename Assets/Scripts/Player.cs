@@ -33,10 +33,16 @@ public class Player : MonoBehaviour
     private float LeafDownSpeed = -0.25f; // ’ƒ—t‚Æ‚ÌÕ“Ë‚ÌŒ¸‘¬—¦
     [SerializeField] private float BarrelDownSpeed = -0.27f; // ƒoƒŒƒ‹‚Æ‚ÌÕ“Ë‚ÌŒ¸‘¬—¦
 
+    [SerializeField] private GameObject Canvas;
+
+    private UIManager uIManager;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         ropeController = FindObjectOfType<RopeController>(); // RopeController‚ğæ“¾
+
+        uIManager = Canvas.GetComponent<UIManager>();
     }
 
     void Update()
@@ -45,16 +51,19 @@ public class Player : MonoBehaviour
         {
             ChangeColor(colorA);
             mode = ColorState.Red;
+            uIManager.UIChangeRed();
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
             ChangeColor(colorS);
             mode = ColorState.Yellow;
+            uIManager.UIChangeYellow();
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
             ChangeColor(colorD);
             mode = ColorState.Blue;
+            uIManager.UIChangeBlue();
         }
 
         Vector3 velocity = rb.velocity;
@@ -87,16 +96,19 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("yellowLeaf");
                 deltaSpeed += dashPower; // dashPower‚ğ‰ÁZ
+                GetComponent<AudioSource>().Play();
             }
             else if (mode == ColorState.Red && other.CompareTag("redLeaf"))
             {
                 Debug.Log("redLeaf");
                 deltaSpeed += dashPower; // dashPower‚ğ‰ÁZ
+                GetComponent<AudioSource>().Play();
             }
             else if (mode == ColorState.Blue && other.CompareTag("blueLeaf"))
             {
                 Debug.Log("blueLeaf");
                 deltaSpeed += dashPower; // dashPower‚ğ‰ÁZ
+                GetComponent<AudioSource>().Play();
             }
             else
             {
@@ -129,7 +141,7 @@ public class Player : MonoBehaviour
     public void SetDeltaSpeed(float newDeltaSpeed)
     {
         whistleDeltaSpeed = newDeltaSpeed;
-
+        
         // RopeController‚©‚ç‚ÌŒ¸‘¬—¦‚ğ“K—p‚·‚é
         deltaSpeed += newDeltaSpeed;
     }
