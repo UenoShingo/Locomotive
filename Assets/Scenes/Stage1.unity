@@ -3356,9 +3356,11 @@ MonoBehaviour:
   jumpPower: 6
   baseDashPower: 2
   maxSpeed: 20
-  yellowLeafDownSpeed: -0.25
-  redLeafDownSpeed: -0.25
-  blueLeafDownSpeed: -0.25
+  yellowLeafDownSpeed: 10
+  redLeafDownSpeed: 10
+  blueLeafDownSpeed: 10
+  blueLeafDashPower: 4
+  redLeafDashPower: 4
   Canvas: {fileID: 683165008}
 --- !u!54 &1023723816
 Rigidbody:
