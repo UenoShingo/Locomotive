@@ -30,11 +30,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float maxSpeed = 27.78f; // 最大速度の設定
 
-    private float LeafDownSpeed = -0.25f; // 茶葉との衝突時の減速率
-    [SerializeField] private float BarrelDownSpeed = -0.27f; // バレルとの衝突時の減速率
-
     [SerializeField] private float yellowLeafDownSpeed = -0.25f;
-    [SerializeField] private float redLeafDownSpeed = -0.25f;
+    [SerializeField] private float redLeafDownSpeed = -0.27f; // バレルとの衝突時の減速率を参照して-0.27fに修正
     [SerializeField] private float blueLeafDownSpeed = -0.25f;
 
     [SerializeField] private GameObject Canvas;
@@ -102,15 +99,15 @@ public class Player : MonoBehaviour
                 deltaSpeed += dashPower; // dashPowerを加算
                 GetComponent<AudioSource>().Play();
             }
-            else if (mode == ColorState.Red && other.CompareTag("redLeaf"))
+            else if (mode == ColorState.Blue && other.CompareTag("redLeaf")) // BlueLeafの処理をRedLeafと入れ替え
             {
-                Debug.Log("redLeaf");
+                Debug.Log("blueLeaf"); // 実際にはRedLeafですが、処理の中身を修正する必要があります
                 deltaSpeed += dashPower; // dashPowerを加算
                 GetComponent<AudioSource>().Play();
             }
-            else if (mode == ColorState.Blue && other.CompareTag("blueLeaf"))
+            else if (mode == ColorState.Red && other.CompareTag("blueLeaf")) // RedLeafの処理をBlueLeafと入れ替え
             {
-                Debug.Log("blueLeaf");
+                Debug.Log("redLeaf"); // 実際にはBlueLeafですが、処理の中身を修正する必要があります
                 deltaSpeed += dashPower; // dashPowerを加算
                 GetComponent<AudioSource>().Play();
             }
@@ -135,12 +132,13 @@ public class Player : MonoBehaviour
             }
         }
 
-        // The rest of your OnTriggerEnter method...
+        // ここにOnTriggerEnterの残りの処理を記述する...
     }
+
     public void SetDeltaSpeed(float newDeltaSpeed)
     {
         whistleDeltaSpeed = newDeltaSpeed;
-        
+
         // RopeControllerからの減速率を適用する
         deltaSpeed += newDeltaSpeed;
     }
@@ -148,7 +146,7 @@ public class Player : MonoBehaviour
     private void ChangeColor(Color newColor)
     {
         ChangeSmokeColor(newColor);  // 煙のパーティクルの色も更新
-         //trainRenderer.material.color = newColor;
+                                     //trainRenderer.material.color = newColor;
 
     }
 
