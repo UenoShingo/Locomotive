@@ -26,21 +26,22 @@ public class Player : MonoBehaviour
     private Rigidbody rb;
     private bool isWhistleBlowing = false;
 
+    private RopeController ropeController; // RopeControllerを保持する変数を追加
+
     [SerializeField] private float maxSpeed = 27.78f; // 最大速度の設定
 
-    [SerializeField] private float yellowLeafDownSpeed = -0.25f;
-    [SerializeField] private float redLeafDownSpeed = -0.27f;
-    [SerializeField] private float blueLeafDownSpeed = -0.25f;
-
-    [SerializeField] private float blueLeafDashPower = 4.0f; // BlueLeafの加速力
-    [SerializeField] private float redLeafDashPower = 4.0f; // RedLeafの加速力
+    private float LeafDownSpeed = -0.25f; // 茶葉との衝突時の減速率
+    [SerializeField] private float BarrelDownSpeed = -0.27f; // バレルとの衝突時の減速率
 
     [SerializeField] private GameObject Canvas;
+
     private UIManager uIManager;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        ropeController = FindObjectOfType<RopeController>(); // RopeControllerを取得
+
         uIManager = Canvas.GetComponent<UIManager>();
     }
 
@@ -68,7 +69,7 @@ public class Player : MonoBehaviour
         Vector3 velocity = rb.velocity;
         float currentSpeed = speed + deltaSpeed + whistleDeltaSpeed;
 
-        // Clamp velocity to ensure it doesn't exceed maxSpeed
+        // 最大速度を超えないように制限する
         if (currentSpeed > maxSpeed)
         {
             currentSpeed = maxSpeed;
@@ -76,7 +77,7 @@ public class Player : MonoBehaviour
 
         velocity.x = currentSpeed;
 
-        // Ensure player doesn't move backward slower than 2 units per second
+        // 後ろに進まないようにする条件を追加
         if (velocity.x < 2)
         {
             velocity.x = 2;
@@ -94,59 +95,62 @@ public class Player : MonoBehaviour
             if (mode == ColorState.Yellow && other.CompareTag("yellowLeaf"))
             {
                 Debug.Log("yellowLeaf");
-                deltaSpeed += dashPower;
+                deltaSpeed += dashPower; // dashPowerを加算
                 GetComponent<AudioSource>().Play();
             }
-            else if (mode == ColorState.Red && other.CompareTag("blueLeaf"))
-            {
-                Debug.Log("blueLeaf");
-                deltaSpeed += blueLeafDashPower; // Use blueLeafDashPower for BlueLeaf
-                GetComponent<AudioSource>().Play();
-            }
-            else if (mode == ColorState.Blue && other.CompareTag("redLeaf"))
+            else if (mode == ColorState.Red && other.CompareTag("redLeaf"))
             {
                 Debug.Log("redLeaf");
-                deltaSpeed += redLeafDashPower; // Use redLeafDashPower for RedLeaf
+                deltaSpeed += dashPower; // dashPowerを加算
+                GetComponent<AudioSource>().Play();
+            }
+            else if (mode == ColorState.Blue && other.CompareTag("blueLeaf"))
+            {
+                Debug.Log("blueLeaf");
+                deltaSpeed += dashPower; // dashPowerを加算
                 GetComponent<AudioSource>().Play();
             }
             else
             {
-                Debug.Log("Unexpected collision: " + other.tag);
                 if (!isWhistleBlowing)
                 {
-                    float decelerationRate = 0f;
-                    if (other.CompareTag("yellowLeaf"))
-                    {
-                        decelerationRate = yellowLeafDownSpeed;
-                    }
-                    else if (other.CompareTag("redLeaf"))
-                    {
-                        decelerationRate = redLeafDownSpeed;
-                    }
-                    else if (other.CompareTag("blueLeaf"))
-                    {
-                        decelerationRate = blueLeafDownSpeed;
-                    }
-
-                    deltaSpeed += dashPower * decelerationRate;
+                    Debug.Log("CollarError");
+                    deltaSpeed += LeafDownSpeed * dashPower;
                 }
             }
         }
-        else
+
+        if (other.CompareTag("Barrel"))
         {
-            Debug.Log("Non-leaf collider entered: " + other.tag);
+            if (!isWhistleBlowing && (ropeController == null || !ropeController.IsRopePulling())) // RopeControllerがないか、引っ張られていない場合
+            {
+                //if (mode == ColorState.Blue)
+                //{
+                //    Debug.Log("Barrel");
+                //    deltaSpeed += dashPower; // dashPowerを加算
+                //}
+                //else
+                //{
+                Debug.Log("BarrelHit");
+                deltaSpeed += BarrelDownSpeed;
+                //}
+            }
         }
     }
 
     public void SetDeltaSpeed(float newDeltaSpeed)
     {
         whistleDeltaSpeed = newDeltaSpeed;
+        
+        // RopeControllerからの減速率を適用する
         deltaSpeed += newDeltaSpeed;
     }
 
     private void ChangeColor(Color newColor)
     {
-        ChangeSmokeColor(newColor);
+        ChangeSmokeColor(newColor);  // 煙のパーティクルの色も更新
+         //trainRenderer.material.color = newColor;
+
     }
 
     private void ChangeSmokeColor(Color newColor)
