@@ -124,16 +124,11 @@ public class Player : MonoBehaviour
         {
             if (!isWhistleBlowing && (ropeController == null || !ropeController.IsRopePulling())) // RopeControllerÇ™Ç»Ç¢Ç©ÅAà¯Ç¡í£ÇÁÇÍÇƒÇ¢Ç»Ç¢èÍçá
             {
-                //if (mode == ColorState.Blue)
-                //{
-                //    Debug.Log("Barrel");
-                //    deltaSpeed += dashPower; // dashPowerÇâ¡éZ
-                //}
-                //else
-                //{
-                Debug.Log("BarrelHit");
-                deltaSpeed += BarrelDownSpeed;
-                //}
+                if (!isWhistleBlowing && (ropeController == null || !ropeController.IsRopePulling()))
+                {
+                    Debug.Log("BarrelHit");
+                    deltaSpeed += BarrelDownSpeed;
+                }
             }
         }
     }

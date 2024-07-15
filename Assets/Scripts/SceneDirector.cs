@@ -9,6 +9,7 @@ public class SceneDirector : MonoBehaviour
     public void GoStagebutton()
     {
         SceneManager.LoadScene("Stage1");
+        SceneManager.LoadScene("Stage2");
     }
 
     public void GoTitlebutton()
