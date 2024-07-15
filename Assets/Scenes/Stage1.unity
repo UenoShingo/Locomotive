@@ -18760,6 +18760,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cb12e0ff58327da47ba65735c3c46d88, type: 3}
   m_PrefabInstance: {fileID: 563824792}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &566807367 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1193270892716639149, guid: d401303a01f67d8408b7d0df6dc4ebb9, type: 3}
+  m_PrefabInstance: {fileID: 186115827}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &566807368 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7964493751326261889, guid: d401303a01f67d8408b7d0df6dc4ebb9, type: 3}
@@ -22741,7 +22746,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countUpText: {fileID: 512486268}
-  target: {fileID: 0}
+  target: {fileID: 1016966051}
   velocityX: 0
   velocityText: {fileID: 58715779}
   UiCollar_Red: {fileID: 1070641296}
@@ -25609,7 +25614,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &791469939
 MonoBehaviour:
@@ -25631,7 +25636,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 1eb1e4fbc129b5c4881cc7e2264042e2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -30796,7 +30801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1135b28991c2ad4e8ce994d25f53324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 1016966058}
   offset: {x: 4, y: 3}
 --- !u!4 &963330263 stripped
 Transform:
@@ -41141,7 +41146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 302512778}
-  smokeObject: {fileID: 0}
+  smokeObject: {fileID: 566807367}
 --- !u!82 &1284784475
 AudioSource:
   m_ObjectHideFlags: 0
