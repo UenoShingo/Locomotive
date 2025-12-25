@@ -9,12 +9,25 @@ public class SceneDirector : MonoBehaviour
     public void GoStagebutton()
     {
         SceneManager.LoadScene("Stage1");
+    }
+
+    public void GoStagebutton2()
+    {
         SceneManager.LoadScene("Stage2");
     }
 
     public void GoTitlebutton()
     {
+        
         SceneManager.LoadScene("Title");
+        
+    }
+
+    public void GoHelpbutton()
+    {
+
+        SceneManager.LoadScene("Help");
+
     }
 
     public void QuitButton()
@@ -23,9 +36,4 @@ public class SceneDirector : MonoBehaviour
         Application.Quit(); // アプリケーションを終了
     }
 
-    public void RestartButton()
-    {
-        Debug.Log("リスタート");
-        SceneManager.LoadScene("Stage1");
-    }
 }

@@ -7,11 +7,16 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     public TextMeshProUGUI countUpText;
+    public TextMeshProUGUI ClearText;
+
     private float countUpTimer = 0f; // カウントの初期値
 
     [SerializeField] GameObject target;
     [SerializeField] float velocityX;
     [SerializeField] Text velocityText;
+
+    [SerializeField] Text timeText;
+
     private Rigidbody rb;
     [SerializeField] GameObject UiCollar_Red;
     [SerializeField] GameObject UiCollar_Blue;
@@ -21,11 +26,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject ClearNormal;
     [SerializeField] GameObject ClearGood;
     [SerializeField] GameObject TitleButton;
-    [SerializeField] GameObject QuitButton;
+    [SerializeField] GameObject RestartButton;
+    [SerializeField] GameObject ClearTime;
 
 
     void Start()
     {
+
+        
         Time.timeScale = 1; //リスタート時にタイムスケールを1に戻す
 
         rb = target.GetComponent<Rigidbody>();
@@ -37,7 +45,12 @@ public class UIManager : MonoBehaviour
         ClearNormal.SetActive(false);
         ClearGood.SetActive(false);
         TitleButton.SetActive(false);
-        QuitButton.SetActive(false);
+        RestartButton.SetActive(false);
+        ClearTime.SetActive(false);
+
+        timeText.enabled = false;
+        // countUpText.enabled = false;
+
     }
 
 
@@ -46,12 +59,10 @@ public class UIManager : MonoBehaviour
 
         // カウントダウンの計算と表示
         countUpTimer += Time.deltaTime;
-        if (countUpTimer > 200f)
-        {
-            countUpTimer = 0f;
-            // カウントダウンが終了した場合の処理を追加する（ゲームオーバーなど）
-        }
+        
         countUpText.text = Mathf.FloorToInt(countUpTimer).ToString() + "s"; // "60s" の表記に変更
+
+        ClearText.text = Mathf.FloorToInt(countUpTimer).ToString() + "s"; // "60s" の表記に変更
 
         velocityX = rb.velocity.x;
         velocityText.text = velocityX.ToString("F0") + "km/s";
@@ -64,14 +75,14 @@ public class UIManager : MonoBehaviour
         UiCollar_Blue.SetActive(false);
         UiCollar_Yellow.SetActive(false);
     }
-   public void UIChangeBlue()
+    public void UIChangeBlue()
     {
         UiCollar_Red.SetActive(false);
         UiCollar_Blue.SetActive(true);
         UiCollar_Yellow.SetActive(false);
     }
 
-   public void UIChangeYellow()
+    public void UIChangeYellow()
     {
         UiCollar_Red.SetActive(false);
         UiCollar_Blue.SetActive(false);
@@ -82,23 +93,30 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 0;
 
-        if(countUpTimer < 10f)
+        if (countUpTimer < 30f)
         {
             ClearGood.SetActive(true);
             TitleButton.SetActive(true);
-            QuitButton.SetActive(true);
+            RestartButton.SetActive(true);
+            ClearTime.SetActive(true);
+            SoundManager.Instance.PlayBGM(BGMSoundData.BGM.GoodT);
+
         }
-        else if(countUpTimer < 20f)
+        else if (countUpTimer < 40f)
         {
             ClearNormal.SetActive(true);
             TitleButton.SetActive(true);
-            QuitButton.SetActive(true);
+            RestartButton.SetActive(true);
+            ClearTime.SetActive(true);
+            SoundManager.Instance.PlayBGM(BGMSoundData.BGM.SosoT);
         }
-        else 
-        { 
+        else
+        {
             ClearBad.SetActive(true);
             TitleButton.SetActive(true);
-            QuitButton.SetActive(true);
+            RestartButton.SetActive(true);
+            ClearTime.SetActive(true);
+            SoundManager.Instance.PlayBGM(BGMSoundData.BGM.BadT);
         }
     }
 }

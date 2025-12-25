@@ -57,7 +57,7 @@ public class RopeController : MonoBehaviour
             }
 
             // 樽に当たっていない場合にのみプレイヤーに減速率を伝える
-            if (!IsHittingBarrel() || IsHittingBarrel()) //★★★速度表示
+            if (!IsHittingBarrel())
             {
                 player.SetDeltaSpeed(smokingDeltaSpeed);
             }

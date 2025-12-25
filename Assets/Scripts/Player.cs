@@ -11,12 +11,12 @@ public class Player : MonoBehaviour
     ColorState mode = ColorState.Red;
 
     [SerializeField] private Renderer trainRenderer;
-    [SerializeField] private Color colorA = Color.blue;
+    [SerializeField] private Color colorA = Color.red;
     [SerializeField] private Color colorS = Color.yellow;
-    [SerializeField] private Color colorD = Color.red;
+    [SerializeField] private Color colorD = Color.blue;
     [SerializeField] private ParticleSystem smokeParticleSystem;
 
-    [SerializeField] private float speed = 2;
+    [SerializeField] private float speed = 7;
     [SerializeField] private float jumpPower = 6;
     [SerializeField] private float baseDashPower = 4.0f; // äÓñ{ÇÃâ¡ë¨óÕ
     private float dashPower = 4.0f; // åªç›ÇÃâ¡ë¨óÕ
@@ -43,11 +43,13 @@ public class Player : MonoBehaviour
         ropeController = FindObjectOfType<RopeController>(); // RopeControllerÇéÊìæ
 
         uIManager = Canvas.GetComponent<UIManager>();
+        
+
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             ChangeColor(colorA);
             mode = ColorState.Red;
@@ -59,7 +61,7 @@ public class Player : MonoBehaviour
             mode = ColorState.Yellow;
             uIManager.UIChangeYellow();
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.A))
         {
             ChangeColor(colorD);
             mode = ColorState.Blue;
@@ -78,9 +80,9 @@ public class Player : MonoBehaviour
         velocity.x = currentSpeed;
 
         // å„ÇÎÇ…êiÇ‹Ç»Ç¢ÇÊÇ§Ç…Ç∑ÇÈèåèÇí«â¡
-        if (velocity.x < 2)
+        if (velocity.x < 7)
         {
-            velocity.x = 2;
+            velocity.x = 7;
             deltaSpeed = 0;
             whistleDeltaSpeed = 0;
         }
@@ -124,11 +126,16 @@ public class Player : MonoBehaviour
         {
             if (!isWhistleBlowing && (ropeController == null || !ropeController.IsRopePulling())) // RopeControllerÇ™Ç»Ç¢Ç©ÅAà¯Ç¡í£ÇÁÇÍÇƒÇ¢Ç»Ç¢èÍçá
             {
-                if (!isWhistleBlowing && (ropeController == null || !ropeController.IsRopePulling()))
-                {
-                    Debug.Log("BarrelHit");
-                    deltaSpeed += BarrelDownSpeed;
-                }
+                //if (mode == ColorState.Blue)
+                //{
+                //    Debug.Log("Barrel");
+                //    deltaSpeed += dashPower; // dashPowerÇâ¡éZ
+                //}
+                //else
+                //{
+                Debug.Log("CollarError");
+                deltaSpeed += BarrelDownSpeed * dashPower;
+                //}
             }
         }
     }

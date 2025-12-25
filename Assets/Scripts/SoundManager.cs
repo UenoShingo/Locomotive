@@ -56,6 +56,11 @@ public class BGMSoundData
         Title,
         Dungeon,
         Hoge, // ‚±‚ê‚ªƒ‰ƒxƒ‹‚É‚È‚é
+        Stage1,
+        Stage2,
+        GoodT,
+        SosoT,
+        BadT,
     }
 
     public BGM bgm;
